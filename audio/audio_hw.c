@@ -241,6 +241,7 @@
 #define VOICE_RECOGNITION_MAIN_MIC_VOLUME 5
 #define VOICE_RECOGNITION_SUB_MIC_VOLUME 18
 #define VOICE_RECOGNITION_HEADSET_MIC_VOLUME 14
+#define VOICE_RECOGNITION_MAIN_MIC_VOLUME_TOROPLUS 4
 
 #define CAMCORDER_MAIN_MIC_VOLUME 13
 #define CAMCORDER_SUB_MIC_VOLUME 10
@@ -253,11 +254,13 @@
 #define VOICE_CALL_MAIN_MIC_VOLUME 0
 #define VOICE_CALL_SUB_MIC_VOLUME_MAGURO -4
 #define VOICE_CALL_SUB_MIC_VOLUME_TORO -2
+#define VOICE_CALL_SUB_MIC_VOLUME_TOROPLUS -4
 #define VOICE_CALL_HEADSET_MIC_VOLUME 8
 
 /* use-case specific output volumes */
 #define NORMAL_SPEAKER_VOLUME_TORO 4
 #define NORMAL_SPEAKER_VOLUME_MAGURO 2
+#define NORMAL_SPEAKER_VOLUME_TOROPLUS 6
 #define NORMAL_HEADSET_VOLUME_TORO -12
 #define NORMAL_HEADSET_VOLUME_MAGURO -12
 #define NORMAL_HEADPHONE_VOLUME_TORO -6 /* allow louder output for headphones */
@@ -267,10 +270,12 @@
 
 #define VOICE_CALL_SPEAKER_VOLUME_TORO 9
 #define VOICE_CALL_SPEAKER_VOLUME_MAGURO 6
+#define VOICE_CALL_SPEAKER_VOLUME_TOROPLUS 8
 #define VOICE_CALL_HEADSET_VOLUME_TORO -6
 #define VOICE_CALL_HEADSET_VOLUME_MAGURO 0
 #define VOICE_CALL_EARPIECE_VOLUME_TORO 2
 #define VOICE_CALL_EARPIECE_VOLUME_MAGURO 6
+#define VOICE_CALL_EARPIECE_VOLUME_TOROPLUS 6
 
 #define VOIP_SPEAKER_VOLUME_TORO 9
 #define VOIP_SPEAKER_VOLUME_MAGURO 7
@@ -286,6 +291,7 @@
 #define PRODUCT_DEVICE_PROPERTY "ro.product.device"
 #define PRODUCT_NAME_PROPERTY   "ro.product.name"
 #define PRODUCT_DEVICE_TORO     "toro"
+#define PRODUCT_DEVICE_TOROPLUS     "toroplus"
 #define PRODUCT_NAME_YAKJU      "yakju"
 
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof((a)[0]))
@@ -650,6 +656,7 @@ struct tuna_audio_device {
     struct echo_reference_itfe *echo_reference;
     bool bluetooth_nrec;
     bool device_is_toro;
+    bool device_is_toroplus;
     int wb_amr;
     bool screen_off;
 
@@ -778,6 +785,16 @@ static int is_device_toro(void)
 
     /* return true if the property matches the given value */
     return strcmp(property, PRODUCT_DEVICE_TORO) == 0;
+}
+
+static int is_device_toroplus(void)
+{
+    char property[PROPERTY_VALUE_MAX];
+
+    property_get(PRODUCT_DEVICE_PROPERTY, property, PRODUCT_DEVICE_TOROPLUS);
+
+    /*  return true if the property matches the given value */
+    return strcmp(property, PRODUCT_DEVICE_TOROPLUS) == 0;
 }
 
 /* The enable flag when 0 makes the assumption that enums are disabled by
@@ -941,12 +958,14 @@ static void set_input_volumes(struct tuna_audio_device *adev, int main_mic_on,
 
     if (adev->mode == AUDIO_MODE_IN_CALL) {
         int sub_mic_volume = is_device_toro() ? VOICE_CALL_SUB_MIC_VOLUME_TORO :
-                                                VOICE_CALL_SUB_MIC_VOLUME_MAGURO;
+                    is_device_toroplus() ? VOICE_CALL_SUB_MIC_VOLUME_TOROPLUS :
+                                            VOICE_CALL_SUB_MIC_VOLUME_MAGURO;
         /* special case: don't look at input source for IN_CALL state */
         volume = DB_TO_ABE_GAIN(main_mic_on ? VOICE_CALL_MAIN_MIC_VOLUME :
                 (headset_mic_on ? VOICE_CALL_HEADSET_MIC_VOLUME :
                 (sub_mic_on ? sub_mic_volume : 0)));
     } else if (adev->active_input) {
+        int main_mic_volume;
         /* determine input volume by use case */
         switch (adev->active_input->source) {
         case AUDIO_SOURCE_MIC: /* general capture */
@@ -962,7 +981,9 @@ static void set_input_volumes(struct tuna_audio_device *adev, int main_mic_on,
             break;
 
         case AUDIO_SOURCE_VOICE_RECOGNITION:
-            volume = DB_TO_ABE_GAIN(main_mic_on ? VOICE_RECOGNITION_MAIN_MIC_VOLUME :
+            main_mic_volume = is_device_toroplus() ? VOICE_RECOGNITION_MAIN_MIC_VOLUME_TOROPLUS :
+                                                   VOICE_RECOGNITION_MAIN_MIC_VOLUME;
+            volume = DB_TO_ABE_GAIN(main_mic_on ? main_mic_volume :
                     (headset_mic_on ? VOICE_RECOGNITION_HEADSET_MIC_VOLUME :
                     (sub_mic_on ? VOICE_RECOGNITION_SUB_MIC_VOLUME : 0)));
             break;
@@ -990,18 +1011,20 @@ static void set_output_volumes(struct tuna_audio_device *adev, bool tty_volume)
     int headset_volume;
     int earpiece_volume;
     bool toro = adev->device_is_toro;
+    bool toroplus = adev->device_is_toroplus;
     int headphone_on = adev->devices & AUDIO_DEVICE_OUT_WIRED_HEADPHONE;
     int speaker_on = adev->devices & AUDIO_DEVICE_OUT_SPEAKER;
     int speaker_volume_overrange = MIXER_ABE_GAIN_0DB;
     int speaker_max_db =
         DB_FROM_SPEAKER_VOLUME(mixer_ctl_get_range_max(adev->mixer_ctls.speaker_volume));
     int normal_speaker_volume = toro ? NORMAL_SPEAKER_VOLUME_TORO :
-                            NORMAL_SPEAKER_VOLUME_MAGURO;
-    int normal_headphone_volume = toro ? NORMAL_HEADPHONE_VOLUME_TORO :
+                                toroplus ? NORMAL_SPEAKER_VOLUME_TOROPLUS :
+                                           NORMAL_SPEAKER_VOLUME_MAGURO;
+    int normal_headphone_volume = (toro || toroplus) ? NORMAL_HEADPHONE_VOLUME_TORO :
                                 NORMAL_HEADPHONE_VOLUME_MAGURO;
-    int normal_headset_volume = toro ? NORMAL_HEADSET_VOLUME_TORO :
+    int normal_headset_volume = (toro || toroplus) ? NORMAL_HEADSET_VOLUME_TORO :
                                 NORMAL_HEADSET_VOLUME_MAGURO;
-    int normal_earpiece_volume = toro ? NORMAL_EARPIECE_VOLUME_TORO :
+    int normal_earpiece_volume = (toro || toroplus) ? NORMAL_EARPIECE_VOLUME_TORO :
                              NORMAL_EARPIECE_VOLUME_MAGURO;
     int dl1_volume_correction = 0;
     int dl2_volume_correction = 0;
@@ -1009,18 +1032,20 @@ static void set_output_volumes(struct tuna_audio_device *adev, bool tty_volume)
     if (adev->mode == AUDIO_MODE_IN_CALL) {
         /* Voice call */
         speaker_volume = toro ? VOICE_CALL_SPEAKER_VOLUME_TORO :
+                         toroplus ? VOICE_CALL_SPEAKER_VOLUME_TOROPLUS :
                                 VOICE_CALL_SPEAKER_VOLUME_MAGURO;
-        headset_volume = toro ? VOICE_CALL_HEADSET_VOLUME_TORO :
+        headset_volume = (toro || toroplus) ? VOICE_CALL_HEADSET_VOLUME_TORO :
                                 VOICE_CALL_HEADSET_VOLUME_MAGURO;
         earpiece_volume = toro ? VOICE_CALL_EARPIECE_VOLUME_TORO :
-                                 VOICE_CALL_EARPIECE_VOLUME_MAGURO;
+                          toroplus ? VOICE_CALL_EARPIECE_VOLUME_TOROPLUS :
+                                VOICE_CALL_EARPIECE_VOLUME_MAGURO;
     } else if (adev->mode == AUDIO_MODE_IN_COMMUNICATION) {
         /* VoIP */
-        speaker_volume = toro ? VOIP_SPEAKER_VOLUME_TORO :
+        speaker_volume = (toro || toroplus) ? VOIP_SPEAKER_VOLUME_TORO :
                                 VOIP_SPEAKER_VOLUME_MAGURO;
-        headset_volume = toro ? VOIP_HEADSET_VOLUME_TORO :
+        headset_volume = (toro || toroplus) ? VOIP_HEADSET_VOLUME_TORO :
                                 VOIP_HEADSET_VOLUME_MAGURO;
-        earpiece_volume = toro ? VOIP_EARPIECE_VOLUME_TORO :
+        earpiece_volume = (toro || toroplus) ? VOIP_EARPIECE_VOLUME_TORO :
                                  VOIP_EARPIECE_VOLUME_MAGURO;
     } else {
         /* Media */
@@ -1288,7 +1313,7 @@ static void select_output_device(struct tuna_audio_device *adev)
                               headset_on, speaker_on);
 
             /* enable sidetone mixer capture if needed */
-            sidetone_capture_on = earpiece_on && adev->device_is_toro;
+            sidetone_capture_on = earpiece_on && (adev->device_is_toro || adev->device_is_toroplus);
         }
 
         set_incall_device(adev);
@@ -3740,6 +3765,7 @@ static int adev_open(const hw_module_t* module, const char* name,
     adev->voice_volume = 1.0f;
     adev->tty_mode = TTY_MODE_OFF;
     adev->device_is_toro = is_device_toro();
+    adev->device_is_toroplus = is_device_toroplus();
     adev->bluetooth_nrec = true;
     adev->wb_amr = 0;
 
