@@ -1,0 +1,3 @@
+# This should be required for all domains.
+# Added access to system.te and nfc.te in the base policy.
+#allow domain sysfs_nfc_power_writable:file rw_file_perms;
