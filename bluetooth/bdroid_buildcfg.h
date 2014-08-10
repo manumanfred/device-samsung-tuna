@@ -18,6 +18,16 @@
 #define _BDROID_BUILDCFG_H
 
 #define BTM_DEF_LOCAL_NAME   "Galaxy Nexus"
+
+// Networking, Capturing, Object Transfer
+// MAJOR CLASS: COMPUTER
+// MINOR CLASS: LAPTOP
+#define BTA_DM_COD {0x1A, 0x01, 0x0C}
+
+#define BTIF_HF_SERVICES (BTA_HSP_SERVICE_MASK)
+#define BTIF_HF_SERVICE_NAMES  { BTIF_HSAG_SERVICE_NAME, NULL }
+#define BTA_DISABLE_DELAY 1000 /* in milliseconds */
+
 #define BLE_INCLUDED TRUE
 #define BTA_GATT_INCLUDED TRUE
 #define SMP_INCLUDED TRUE
