@@ -19,12 +19,6 @@
 #
 # Everything in this directory will become public
 
-ifeq ($(TARGET_PREBUILT_KERNEL),)
-LOCAL_KERNEL := device/samsung/tuna/kernel
-else
-LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
-endif
-
 DEVICE_PACKAGE_OVERLAYS := device/samsung/tuna/overlay
 
 # This device is xhdpi.  However the platform doesn't
@@ -49,12 +43,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
 	power.tuna
 
-# Support for Browser's saved page feature. This allows
-# for pages saved on previous versions of the OS to be
-# viewed on the current OS.
-PRODUCT_PACKAGES += \
-	libskia_legacy
-
 # Audio
 PRODUCT_PACKAGES += \
 	audio.primary.tuna \
@@ -73,7 +61,6 @@ PRODUCT_PACKAGES += \
 #	keystore.tuna
 
 PRODUCT_COPY_FILES += \
-	$(LOCAL_KERNEL):kernel \
 	device/samsung/tuna/init.tuna.rc:root/init.tuna.rc \
 	device/samsung/tuna/init.tuna.usb.rc:root/init.tuna.usb.rc \
 	device/samsung/tuna/fstab.tuna:root/fstab.tuna \
@@ -180,6 +167,15 @@ PRODUCT_COPY_FILES += \
     $(NFCEE_ACCESS_PATH):system/etc/nfcee_access.xml
 
 PRODUCT_PROPERTY_OVERRIDES += \
+	keyguard.no_require_sim=true \
+	ro.url.legal=http://www.google.com/intl/%s/mobile/android/basic/phone-legal.html \
+	ro.url.legal.android_privacy=http://www.google.com/intl/%s/mobile/android/basic/privacy.html \
+	ro.com.google.clientidbase=android-google \
+	ro.com.android.wifi-watchlist=GoogleGuest \
+	ro.setupwizard.enterprise_mode=1 \
+	ro.com.android.dateformat=MM-dd-yyyy
+
+PRODUCT_PROPERTY_OVERRIDES += \
 	ro.opengles.version=131072
 
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -200,6 +196,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
 	e2fsck \
 	setup_fs
+
+# Don't preload EGL drivers in Zygote at boot time
+PRODUCT_PROPERTY_OVERRIDES += \
+	ro.zygote.disable_gl_preload=true
 
 $(call inherit-product, frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk)
 

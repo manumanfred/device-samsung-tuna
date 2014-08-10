@@ -37,19 +37,31 @@ TARGET_NO_BOOTLOADER := true
 BOARD_KERNEL_BASE := 0x80000000
 # BOARD_KERNEL_CMDLINE :=
 
+# Define kernel config for inline building
+TARGET_KERNEL_CONFIG := tuna_defconfig
+TARGET_KERNEL_SOURCE := kernel/samsung/tuna
+
+TARGET_PREBUILT_KERNEL := device/samsung/tuna/kernel
+
 TARGET_NO_RADIOIMAGE := true
 TARGET_BOARD_PLATFORM := omap4
 TARGET_BOOTLOADER_BOARD_NAME := tuna
 
 BOARD_EGL_CFG := device/samsung/tuna/egl.cfg
+BOARD_EGL_WORKAROUND_BUG_10194508 := true
 BOARD_CREATE_TUNA_HDCP_KEYS_SYMLINK := true
 
 #BOARD_USES_HGL := true
 #BOARD_USES_OVERLAY := true
 USE_OPENGL_RENDERER := true
 
+# Force the screenshot path to CPU consumer
+COMMON_GLOBAL_CFLAGS += -DFORCE_SCREENSHOT_CPU_PATH
+
 # set if the target supports FBIO_WAITFORVSYNC
 TARGET_HAS_WAITFORVSYNC := true
+
+TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
 
 TARGET_RECOVERY_PIXEL_FORMAT := "BGRA_8888"
 TARGET_RECOVERY_UI_LIB := librecovery_ui_tuna
@@ -82,13 +94,13 @@ WIFI_DRIVER_FW_PATH_AP      := "/vendor/firmware/fw_bcmdhd_apsta.bin"
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
 
-BOARD_LIB_DUMPSTATE := libdumpstate.tuna
+BOARD_HAL_STATIC_LIBRARIES := libdumpstate.tuna
 
 BOARD_USES_SECURE_SERVICES := true
 
-BOARD_SEPOLICY_DIRS := \
+BOARD_SEPOLICY_DIRS += \
         device/samsung/tuna/sepolicy
 
-BOARD_SEPOLICY_UNION := \
+BOARD_SEPOLICY_UNION += \
         genfs_contexts \
         file_contexts
