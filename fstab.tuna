@@ -14,4 +14,3 @@
 /dev/block/platform/omap/omap_hsmmc.0/by-name/sbl       /sbl                emmc      defaults                                              defaults
 /dev/block/platform/omap/omap_hsmmc.0/by-name/xloader   /xloader            emmc      defaults                                              defaults
 /dev/block/platform/omap/omap_hsmmc.0/by-name/radio     /radio              emmc      defaults                                              defaults
-
