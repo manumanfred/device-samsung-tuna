@@ -201,6 +201,11 @@ PRODUCT_PACKAGES += \
 PRODUCT_PROPERTY_OVERRIDES += \
 	ro.zygote.disable_gl_preload=true
 
+# Testing only
+PRODUCT_PACKAGES := \
+	dhcpcd.conf
+
+
 $(call inherit-product, frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk)
 
 $(call inherit-product-if-exists, vendor/nxp/pn544/nxp-pn544-fw-vendor.mk)
