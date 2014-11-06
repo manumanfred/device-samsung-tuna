@@ -201,9 +201,11 @@ PRODUCT_PACKAGES += \
 PRODUCT_PROPERTY_OVERRIDES += \
 	ro.zygote.disable_gl_preload=true
 
-# Testing only
+# WiFi stuff
 PRODUCT_PACKAGES := \
-	dhcpcd.conf
+	dhcpcd.conf \
+	wpa_supplicant \
+	wpa_supplicant.conf
 
 
 $(call inherit-product, frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk)
