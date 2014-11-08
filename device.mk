@@ -69,6 +69,12 @@ PRODUCT_COPY_FILES += \
 	device/samsung/tuna/media_codecs.xml:system/etc/media_codecs.xml \
 	device/samsung/tuna/gps.conf:system/etc/gps.conf
 
+PRODUCT_COPY_FILES += \
+	frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
+	frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telepho
+ny.xml \
+	frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml
+
 # Wifi
 ifneq ($(TARGET_PREBUILT_WIFI_MODULE),)
 PRODUCT_COPY_FILES += \
@@ -206,7 +212,6 @@ PRODUCT_PACKAGES := \
 	dhcpcd.conf \
 	wpa_supplicant \
 	wpa_supplicant.conf
-
 
 $(call inherit-product, frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk)
 
