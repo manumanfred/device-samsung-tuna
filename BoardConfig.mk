@@ -116,5 +116,4 @@ BOARD_SEPOLICY_UNION += \
         surfaceflinger.te \
         gpsd.te \
         keystore.te \
-        pvrsrvctl.te \
         healthd.te
