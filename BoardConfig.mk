@@ -107,4 +107,12 @@ BOARD_SEPOLICY_UNION += \
         file_contexts \
         recovery.te \
         vold.te \
-        lmkd.te
+        lmkd.te \
+        domain.te \
+        rild.te \
+        system_server.te \
+        bluetooth.te \
+        init.shell.te \
+        surfaceflinger.te \
+        gpsd.te \
+        keystore.te
