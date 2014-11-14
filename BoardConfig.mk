@@ -105,4 +105,5 @@ BOARD_SEPOLICY_DIRS += \
 BOARD_SEPOLICY_UNION += \
         genfs_contexts \
         file_contexts \
-        recovery.te
+        recovery.te \
+        vold.te
