@@ -108,7 +108,6 @@ BOARD_SEPOLICY_UNION += \
         recovery.te \
         vold.te \
         lmkd.te \
-        domain.te \
         rild.te \
         system_server.te \
         bluetooth.te \
