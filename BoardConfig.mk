@@ -48,7 +48,7 @@ TARGET_BOARD_PLATFORM := omap4
 TARGET_BOOTLOADER_BOARD_NAME := tuna
 
 BOARD_EGL_CFG := device/samsung/tuna/egl.cfg
-BOARD_EGL_WORKAROUND_BUG_10194508 := true
+#BOARD_EGL_WORKAROUND_BUG_10194508 := true
 BOARD_CREATE_TUNA_HDCP_KEYS_SYMLINK := true
 
 #BOARD_USES_HGL := true
@@ -56,7 +56,7 @@ BOARD_CREATE_TUNA_HDCP_KEYS_SYMLINK := true
 USE_OPENGL_RENDERER := true
 
 # Force the screenshot path to CPU consumer
-COMMON_GLOBAL_CFLAGS += -DFORCE_SCREENSHOT_CPU_PATH
+#COMMON_GLOBAL_CFLAGS += -DFORCE_SCREENSHOT_CPU_PATH
 
 # set if the target supports FBIO_WAITFORVSYNC
 TARGET_HAS_WAITFORVSYNC := true
@@ -104,4 +104,5 @@ BOARD_SEPOLICY_DIRS += \
 
 BOARD_SEPOLICY_UNION += \
         genfs_contexts \
-        file_contexts
+        file_contexts \
+        recovery.te
