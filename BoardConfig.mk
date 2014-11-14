@@ -104,15 +104,4 @@ BOARD_SEPOLICY_DIRS += \
 
 BOARD_SEPOLICY_UNION += \
         genfs_contexts \
-        file_contexts \
-        recovery.te \
-        vold.te \
-        lmkd.te \
-        rild.te \
-        system_server.te \
-        bluetooth.te \
-        init.shell.te \
-        surfaceflinger.te \
-        gpsd.te \
-        keystore.te \
-        healthd.te
+        file_contexts
