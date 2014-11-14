@@ -106,4 +106,5 @@ BOARD_SEPOLICY_UNION += \
         genfs_contexts \
         file_contexts \
         recovery.te \
-        vold.te
+        vold.te \
+        lmkd.te
