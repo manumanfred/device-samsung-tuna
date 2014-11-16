@@ -65,6 +65,8 @@ TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
 
 # MD5_Init symbols. Needed only for Nexus's RIL?
 TARGET_WITH_BIONIC_MD5 := true
+# At least one file may need this
+COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS
 
 TARGET_RECOVERY_PIXEL_FORMAT := "BGRA_8888"
 TARGET_RECOVERY_UI_LIB := librecovery_ui_tuna
