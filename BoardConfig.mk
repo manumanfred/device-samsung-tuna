@@ -114,8 +114,7 @@ BOARD_SEPOLICY_UNION += \
         pvrsrvinit.te \
         bluetooth.te \
         gpsd.te \
-        init.shell.te \
-        keystore .te \
+        keystore.te \
         lmkd.te \
         rild.te \
         surfaceflinger.te \
