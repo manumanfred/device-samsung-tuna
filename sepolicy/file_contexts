@@ -31,5 +31,8 @@
 # surface flinger
 /dev/dsscomp                    u:object_r:graphics_device:s0
 
+# Service pvrsrvctl
+/system/vendor/bin/pvrsrvctl    u:object_r:pvrsrvctl_exec:s0
+
 # Accelerometer
 /dev/accelirq                   u:object_r:sensors_device:s0
