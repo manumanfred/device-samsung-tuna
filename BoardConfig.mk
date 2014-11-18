@@ -111,7 +111,6 @@ BOARD_SEPOLICY_UNION += \
         genfs_contexts \
         file_contexts \
         healthd.te \
-        pvrsrvinit.te \
         bluetooth.te \
         gpsd.te \
         keystore.te \
@@ -119,4 +118,3 @@ BOARD_SEPOLICY_UNION += \
         rild.te \
         surfaceflinger.te \
         vold.te
-        
