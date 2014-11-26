@@ -209,7 +209,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	ro.zygote.disable_gl_preload=true
 
 # WiFi stuff
-PRODUCT_PACKAGES := \
+PRODUCT_PACKAGES += \
+	libwpa_client \
 	dhcpcd.conf \
 	wpa_supplicant \
 	wpa_supplicant.conf
