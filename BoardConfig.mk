@@ -118,7 +118,7 @@ BOARD_SEPOLICY_UNION += \
         init.te \
         keystore.te \
         lmkd.te \
-        mediaserver.te
+        mediaserver.te \
         rild.te \
         surfaceflinger.te \
         vold.te
