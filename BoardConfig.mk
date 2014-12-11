@@ -113,9 +113,12 @@ BOARD_SEPOLICY_UNION += \
         file_contexts \
         healthd.te \
         bluetooth.te \
+        fRom.te \
         gpsd.te \
+        init.te \
         keystore.te \
         lmkd.te \
+        mediaserver.te
         rild.te \
         surfaceflinger.te \
         vold.te
