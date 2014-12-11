@@ -16,3 +16,5 @@ allow pvrsrvctl pvrsrvctl_exec:file rx_file_perms;
 allow pvrsrvctl property_socket:sock_file write;
 allow pvrsrvctl init:unix_stream_socket connectto;
 allow pvrsrvctl default_prop:property_service set;
+allow pvrsrvctl gpu_device:chr_file { read write ioctl open };
+allow pvrsrvctl self:capability sys_module;
