@@ -34,10 +34,7 @@
 
 # Service pvrsrvctl
 /system/vendor/bin/pvrsrvctl    u:object_r:pvrsrvctl_exec:s0
+/system/vendor/bin/fRom         u:object_r:fRom_exec:s0
 
 # Accelerometer
 /dev/accelirq                   u:object_r:sensors_device:s0
-
-# System binaries
-/system/bin/pvrsrvinit          u:object_r:pvrsrvinit_exec:s0
-/system/vendor/bin/fRom         u:object_r:fRom_exec:s0
