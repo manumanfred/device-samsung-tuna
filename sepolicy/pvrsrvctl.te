@@ -1,6 +1,8 @@
 # pvrsrvctl
 type pvrsrvctl, domain;
 type pvrsrvctl_exec, exec_type, file_type;
+
 init_daemon_domain(pvrsrvctl)
+
 allow pvrsrvctl gpu_device:chr_file { read write ioctl open };
 allow pvrsrvctl self:capability sys_module;
