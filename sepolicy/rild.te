@@ -1,5 +1,8 @@
 # Kernel bug for Linux < 3.3: sysfs inodes can lose their security context
 # and revert to the base sysfs type.
 allow rild sysfs:file write;
-allow rild radio_data_file:dir setattr;
+allow rild radio_data_file:dir r_dir_perms;
+#allow rild radio_data_file:dir setattr;
+allow rild system_data_file:dir create_dir_perms;
+allow rild system_data_file:file create_file_perms;
 allow rild self:process execmem;
