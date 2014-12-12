@@ -123,7 +123,7 @@ BOARD_SEPOLICY_UNION += \
         lmkd.te \
         mediaserver.te \
         pvrsrvctl.te \
-	pvrsrvinit.te \
+        pvrsrvinit.te \
         recovery.te \
         rild.te \
         sdcardd.te \
