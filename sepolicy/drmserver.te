@@ -1,4 +1,3 @@
 init_daemon_domain(drmserver)
-typeattribute drmserver mlstrustedsubject;
 
 allow drmserver video_device:chr_file rw_file_perms;
