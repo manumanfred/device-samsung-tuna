@@ -1,3 +1,1 @@
-init_daemon_domain(drmserver)
-
 allow drmserver video_device:chr_file rw_file_perms;
