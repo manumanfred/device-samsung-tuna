@@ -112,10 +112,13 @@ BOARD_SEPOLICY_UNION += \
         genfs_contexts \
         file_contexts \
         bluetooth.te \
+        domain.te \
+        drmserver.te \
         fRom.te \
         gpsd.te \
         healthd.te \
         init.te \
+        init_shell.te \
         keystore.te \
         lmkd.te \
         mediaserver.te \
