@@ -111,15 +111,20 @@ BOARD_SEPOLICY_DIRS += \
 BOARD_SEPOLICY_UNION += \
         genfs_contexts \
         file_contexts \
-        healthd.te \
         bluetooth.te \
         fRom.te \
         gpsd.te \
+        healthd.te \
         init.te \
         keystore.te \
         lmkd.te \
         mediaserver.te \
         pvrsrvctl.te \
+        recovery.te \
         rild.te \
+        sdcardd.te \
+        servicemanager.te \
         surfaceflinger.te \
-        vold.te
+        system_server.te \
+        vold.te \
+        zygote.te
