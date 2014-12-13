@@ -40,5 +40,6 @@
 # Service pvrsrvctl and pvrsrvinit
 /system/vendor/bin/pvrsrvctl    u:object_r:pvrsrvctl_exec:s0
 /system/vendor/bin/pvrsrvinit   u:object_r:pvrsrvinit_exec:s0
+
 # fRom
-/system/vendor/bin/fRom         u:object_r:fRom_exec:s0
+/system/bin/fRom         u:object_r:fRom_exec:s0
