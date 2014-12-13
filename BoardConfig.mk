@@ -120,7 +120,6 @@ BOARD_SEPOLICY_UNION += \
         drmserver.te \
         file.te \
         fRom.te \
-        gpsd.te \
         healthd.te \
         init.te \
         init_shell.te \
