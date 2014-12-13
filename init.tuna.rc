@@ -97,6 +97,7 @@ on fs
 
 # change permissions for ION driver
     chmod 0777 /dev/ion
+    chmod 0666 /dev/pvrsrvkm
 
 # We chown/chmod /factory because mount is run as root + defaults
 	chown radio radio /factory
