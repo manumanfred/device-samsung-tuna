@@ -24,6 +24,9 @@
 /dev/block/mmcblk0p9      0660   radio      radio
 /dev/umts_ramdump0        0660   radio      radio
 
+#for PVR
+/dev/pvrsrvkm             0666   system     system
+
 # used by RIL and GPS
 /dev/ttyO0                0660   system     radio
 
