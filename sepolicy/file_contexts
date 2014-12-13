@@ -19,6 +19,8 @@
 /factory(/.*)?                  u:object_r:efs_file:s0
 /factory/bluetooth(/.*)?        u:object_r:bluetooth_efs_file:s0
 /factory/nv_data.bin.*          u:object_r:radio_data_file:s0
+/dev/block/mmcblk0p3            u:object_r:efs_block_device:s0
+
 #nfc
 /dev/ttyO3     u:object_r:nfc_device:s0
 
