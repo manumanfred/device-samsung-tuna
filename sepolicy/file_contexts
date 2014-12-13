@@ -40,5 +40,3 @@
 /system/vendor/bin/pvrsrvinit   u:object_r:pvrsrvinit_exec:s0
 # fRom
 /system/vendor/bin/fRom         u:object_r:fRom_exec:s0
-# pvrsrvkm 
-/dev/pvrsrvkm                   u:object_r:gpu_device:s0
