@@ -117,6 +117,7 @@ BOARD_SEPOLICY_UNION += \
         bluetooth.te \
         domain.te \
         drmserver.te \
+        file.te \
         fRom.te \
         gpsd.te \
         healthd.te \
