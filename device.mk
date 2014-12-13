@@ -30,6 +30,7 @@ PRODUCT_AAPT_PREF_CONFIG := xhdpi
 
 PRODUCT_PACKAGES := \
 	lights.tuna \
+	charger \
 	charger_res_images
 
 PRODUCT_PACKAGES += \
@@ -210,8 +211,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # WiFi stuff
 PRODUCT_PACKAGES += \
 	libwpa_client \
-	dhcpcd.conf \
 	hostpad \
+	dhcpcd.conf \
 	wpa_supplicant \
 	wpa_supplicant.conf
 
