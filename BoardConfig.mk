@@ -59,6 +59,8 @@ USE_OPENGL_RENDERER := true
 # Force the screenshot path to CPU consumer
 #COMMON_GLOBAL_CFLAGS += -DFORCE_SCREENSHOT_CPU_PATH
 
+TARGET_ENABLE_NON_PIE_SUPPORT := true
+
 # set if the target supports FBIO_WAITFORVSYNC
 TARGET_HAS_WAITFORVSYNC := true
 
