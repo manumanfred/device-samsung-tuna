@@ -134,7 +134,9 @@ BOARD_SEPOLICY_UNION += \
         rild.te \
         sdcardd.te \
         servicemanager.te \
+        setup_fs.te \
         surfaceflinger.te \
         system_server.te \
+        uncrypt.te \
         vold.te \
         zygote.te
