@@ -1,2 +1,10 @@
 type rfkill_device, dev_type;
 type efs_block_device, dev_type;
+
+# setup_fs
+# Userdata block device mounted on /data.
+type userdata_block_device, dev_type;
+
+# setup_fs
+# Cache block device mounted on /cache.
+type cache_block_device, dev_type;
