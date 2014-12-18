@@ -70,6 +70,8 @@ TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
 TARGET_WITH_BIONIC_MD5 := true
 # At least one file may need this
 COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS
+# use .odex files...
+WITH_DEXPREOPT := true
 
 # Fix A2DP audio guality
 BETTER_AUDIO_WITH_SAMPLE_RATE_48K := true
