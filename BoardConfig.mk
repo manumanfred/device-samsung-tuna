@@ -116,28 +116,28 @@ BOARD_SEPOLICY_DIRS += \
 BOARD_SEPOLICY_UNION += \
         genfs_contexts \
         file_contexts \
-#        bluetooth.te \
-#        device.te \
-#        domain.te \
-#        drmserver.te \
-#        file.te \
-#        fRom.te \
-#        healthd.te \
-#        init.te \
-#        init_shell.te \
-#        keystore.te \
-#        lmkd.te \
-#        mediaserver.te \
-#        pvrsrvctl.te \
-#        pvrsrvinit.te \
-#        recovery.te \
-#        rild.te \
-#        sdcardd.te \
-#        servicemanager.te \
-#        setup_fs.te \
-#        surfaceflinger.te \
-#        system_server.te \
-#        uncrypt.te \
-#        vold.te \
-#        zygote.te
+        bluetooth.te \
+        device.te \
+        domain.te \
+        drmserver.te \
+        file.te \
+        fRom.te \
+        healthd.te \
+        init.te \
+        init_shell.te \
+        keystore.te \
+        lmkd.te \
+        mediaserver.te \
+        pvrsrvctl.te \
+        pvrsrvinit.te \
+        recovery.te \
+        rild.te \
+        sdcardd.te \
+        servicemanager.te \
+        setup_fs.te \
+        surfaceflinger.te \
+        system_server.te \
+        uncrypt.te \
+        vold.te \
+        zygote.te
 
