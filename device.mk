@@ -30,7 +30,6 @@ PRODUCT_AAPT_PREF_CONFIG := xhdpi
 
 PRODUCT_PACKAGES := \
 	lights.tuna \
-	charger \
 	charger_res_images
 
 PRODUCT_PACKAGES += \
