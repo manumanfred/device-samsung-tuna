@@ -137,6 +137,7 @@ service fRom /system/bin/fRom \
 	user media
 	group media
 	class late_start
+	seclabel u:r:fRom:s0
 	oneshot
 
 service pvrsrvctl /vendor/bin/pvrsrvctl --start --no-module
