@@ -211,7 +211,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # WiFi stuff
 PRODUCT_PACKAGES += \
 	libwpa_client \
-	hostpad \
+	hostapd \
 	dhcpcd.conf \
 	wpa_supplicant \
 	wpa_supplicant.conf
