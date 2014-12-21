@@ -154,7 +154,6 @@ private:
         light,
         proximity,
         pressure,
-        temperature,
         numSensorDrivers,       // wake pipe goes here
         mpl_power,              //special handle for MPL pm interaction
         numFds,
