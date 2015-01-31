@@ -1,0 +1,5 @@
+# dumpdcc
+type dumpdcc, domain;
+type dumpdcc_exec, exec_type, file_type;
+
+init_daemon_domain(dumpdcc)

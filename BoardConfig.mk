@@ -120,8 +120,8 @@ BOARD_SEPOLICY_UNION += \
         device.te \
         domain.te \
         drmserver.te \
+        dumpdcc.te \
         file.te \
-        fRom.te \
         healthd.te \
         init.te \
         init_shell.te \
