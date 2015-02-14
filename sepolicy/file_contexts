@@ -41,8 +41,8 @@
 /system/vendor/bin/pvrsrvctl    u:object_r:pvrsrvctl_exec:s0
 /system/vendor/bin/pvrsrvinit   u:object_r:pvrsrvinit_exec:s0
 
-# fRom
-/system/bin/fRom         u:object_r:fRom_exec:s0
+# dumpdcc
+/system/bin/dumpdcc         u:object_r:dumpdcc_exec:s0
 
 # setup_fs
 /system/bin/setup_fs            u:object_r:setup_fs_exec:s0
