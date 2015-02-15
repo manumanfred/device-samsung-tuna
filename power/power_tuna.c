@@ -92,6 +92,8 @@ static void tuna_power_init(struct power_module *module)
     sysfs_write(CPUFREQ_INTERACTIVE "target_loads", "70 920000:80 1200000:99");
     sysfs_write(CPUFREQ_INTERACTIVE "go_hispeed_load", "99");
     sysfs_write(CPUFREQ_INTERACTIVE "above_hispeed_delay", "80000");
+    sysfs_write(CPUFREQ_INTERACTIVE "boostpulse_duration", "300000");
+    sysfs_write(CPUFREQ_INTERACTIVE "io_is_busy", "1");
 
     ALOGI("Initialized successfully");
     tuna->inited = 1;
