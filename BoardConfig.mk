@@ -117,6 +117,7 @@ BOARD_SEPOLICY_UNION += \
         genfs_contexts \
         file_contexts \
         bluetooth.te \
+        debuggerd.te \
         device.te \
         domain.te \
         drmserver.te \
