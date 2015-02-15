@@ -85,19 +85,19 @@ static struct sensor_t sSensorList[LOCAL_SENSORS + MPLSensor::numSensors] = {
           1, SENSORS_LIGHT_HANDLE,
           SENSOR_TYPE_LIGHT, powf(10, 125.0f/ 24.0f) * 4, 1.0f, 0.75f, 0, 0, 0, 0, 0, 0,
           SENSOR_FLAG_ON_CHANGE_MODE,
-          { } },
+	  { } },
       { "GP2A Proximity sensor",
           "Sharp",
           1, SENSORS_PROXIMITY_HANDLE,
           SENSOR_TYPE_PROXIMITY, 5.0f, 5.0f, 0.75f, 0, 0, 0, 0, 0, 0,
-          SENSOR_FLAG_WAKE_UP | SENSOR_FLAG_ON_CHANGE_MODE,
-          { } },
+	  SENSOR_FLAG_WAKE_UP | SENSOR_FLAG_ON_CHANGE_MODE,
+	  { } },
       { "BMP180 Pressure sensor",
           "Bosch",
           1, SENSORS_PRESSURE_HANDLE,
           SENSOR_TYPE_PRESSURE, 1100.0f, 0.01f, 0.67f, 20000, 0, 0, 0, 0, 20000,
-          SENSOR_FLAG_CONTINUOUS_MODE,
-          { } },
+	  SENSOR_FLAG_CONTINUOUS_MODE,
+	  { } },
       { "BMP180 Temperature sensor",
           "Bosch",
           1, SENSORS_TEMPERATURE_HANDLE,
@@ -119,22 +119,22 @@ static int sensors__get_sensors_list(struct sensors_module_t* module,
 }
 
 static struct hw_module_methods_t sensors_module_methods = {
-        .open = open_sensors
+        open: open_sensors
 };
 
 struct sensors_module_t HAL_MODULE_INFO_SYM = {
-        .common = {
-                .tag = HARDWARE_MODULE_TAG,
-                .version_major = 1,
-                .version_minor = 0,
-                .id = SENSORS_HARDWARE_MODULE_ID,
-                .name = "Samsung Sensor module",
-                .author = "Samsung Electronic Company",
-                .methods = &sensors_module_methods,
-                .dso = 0,
-                .reserved = {},
+        common: {
+                tag: HARDWARE_MODULE_TAG,
+                version_major: 1,
+                version_minor: 0,
+                id: SENSORS_HARDWARE_MODULE_ID,
+                name: "Samsung Sensor module",
+                author: "Samsung Electronic Company",
+                methods: &sensors_module_methods,
+                dso: 0,
+                reserved: {},
         },
-        .get_sensors_list = sensors__get_sensors_list,
+        get_sensors_list: sensors__get_sensors_list,
 };
 
 struct sensors_poll_context_t {
@@ -399,7 +399,7 @@ static int open_sensors(const struct hw_module_t* module, const char* id,
     memset(&dev->device, 0, sizeof(sensors_poll_device_t));
 
     dev->device.common.tag = HARDWARE_DEVICE_TAG;
-    dev->device.common.version  = SENSORS_DEVICE_API_VERSION_1_0;
+    dev->device.common.version  = 0;
     dev->device.common.module   = const_cast<hw_module_t*>(module);
     dev->device.common.close    = poll__close;
     dev->device.activate        = poll__activate;
