@@ -129,6 +129,7 @@ BOARD_SEPOLICY_UNION += \
         keystore.te \
         lmkd.te \
         mediaserver.te \
+        netd.te \
         pvrsrvctl.te \
         pvrsrvinit.te \
         recovery.te \
@@ -139,6 +140,7 @@ BOARD_SEPOLICY_UNION += \
         surfaceflinger.te \
         system_server.te \
         uncrypt.te \
+        untrusted_app.te \
         vold.te \
         zygote.te
 
