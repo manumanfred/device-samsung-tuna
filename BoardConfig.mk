@@ -138,9 +138,11 @@ BOARD_SEPOLICY_UNION += \
         servicemanager.te \
         setup_fs.te \
         surfaceflinger.te \
+        system.te \
         system_server.te \
         uncrypt.te \
         untrusted_app.te \
         vold.te \
+        wpa_supplicant.te \
         zygote.te
 
