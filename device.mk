@@ -185,7 +185,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	ro.setupwizard.enterprise_mode=1 \
 	ro.com.android.dateformat=MM-dd-yyyy \
 	camera2.portability.force_api=1
-	ro.build.selinux=0
 
 PRODUCT_PROPERTY_OVERRIDES += \
 	ro.opengles.version=131072
