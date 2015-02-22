@@ -2,6 +2,8 @@
 # and revert to the base sysfs type.
 allow rild sysfs:file write;
 
+allow rild block_device:dir search;
+
 allow rild self:netlink_socket { create bind read write };
 allow rild self:netlink_route_socket { write };
 allow rild self:netlink_kobject_uevent_socket { create bind read write };
