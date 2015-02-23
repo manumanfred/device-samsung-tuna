@@ -123,6 +123,7 @@ BOARD_SEPOLICY_UNION += \
         drmserver.te \
         dumpdcc.te \
         file.te \
+        fRom.te \
         healthd.te \
         init.te \
         init_shell.te \
