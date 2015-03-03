@@ -193,7 +193,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	ro.sf.lcd_density=320
 
 PRODUCT_PROPERTY_OVERRIDES += \
-	ro.hwui.disable_scissor_opt=true
+	ro.hwui.disable_scissor_opt=true \
+	af.fast_track_multiplier=1
 
 PRODUCT_CHARACTERISTICS := nosdcard
 
