@@ -15,6 +15,11 @@ on init
     symlink /storage/emulated/legacy /storage/sdcard0
     symlink /mnt/shell/emulated/0 /storage/emulated/legacy
 
+    # KSM options
+    write /sys/kernel/mm/ksm/pages_to_scan 100
+    write /sys/kernel/mm/ksm/sleep_millisecs 500
+    write /sys/kernel/mm/ksm/run 1
+
     # create directory for mounting usb drives
     chmod 0701 /mnt/media_rw
     mkdir /mnt/media_rw/usbdisk 0775 system system
