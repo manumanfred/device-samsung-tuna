@@ -25,6 +25,11 @@ def FullOTA_InstallEnd(info):
   else:
     WriteBootloader(info, bootloader_img)
 
+def IncrementalOTA_InstallBegin(info):
+  info.script.Unmount("/system")
+  info.script.TunePartition("/system", "-O", "^has_journal")
+  info.script.Mount("/system")
+
   try:
     radio_img = info.input_zip.read("RADIO/radio.img")
   except KeyError:
