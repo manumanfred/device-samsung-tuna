@@ -30,7 +30,9 @@ PRODUCT_AAPT_PREF_CONFIG := xhdpi
 
 PRODUCT_PACKAGES := \
 	lights.tuna \
+	hwcomposer.tuna \
 	charger_res_images
+	
 
 PRODUCT_PACKAGES += \
 	sensors.tuna \
