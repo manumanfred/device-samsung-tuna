@@ -57,8 +57,7 @@ BOARD_CREATE_TUNA_HDCP_KEYS_SYMLINK := true
 USE_OPENGL_RENDERER := true
 
 # Force the screenshot path to CPU consumer
-# Keep this disabled for now..
-#COMMON_GLOBAL_CFLAGS += -DFORCE_SCREENSHOT_CPU_PATH
+COMMON_GLOBAL_CFLAGS += -DFORCE_SCREENSHOT_CPU_PATH
 
 # set if the target supports FBIO_WAITFORVSYNC
 TARGET_HAS_WAITFORVSYNC := true
@@ -142,4 +141,3 @@ BOARD_SEPOLICY_UNION += \
         vold.te \
         wpa_supplicant.te \
         zygote.te
-
