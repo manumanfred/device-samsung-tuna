@@ -83,8 +83,6 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_PROPERTY_OVERRIDES := \
 	wifi.interface=wlan0
-	persist.sys.media.legacy-drm=true \
-	drm.service.enabled=true
 
 # libhwui flags
 PRODUCT_PROPERTY_OVERRIDES += \
