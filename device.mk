@@ -54,6 +54,13 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
 	libion.so
 
+ifeq ($(TARGET_TUNA_AUDIO_HDMI),true)
+PRODUCT_COPY_FILES += \
+	device/samsung/tuna/audio/policy/audio_policy.hdmi.conf:system/etc/audio_policy.conf
+else
+	device/samsung/tuna/audio/policy/audio_policy.default.conf:system/etc/audio_policy.conf
+endif
+
 # Audio policy configuration
 PRODUCT_COPY_FILES += \
 	device/samsung/tuna/audio/audio_policy.conf:system/etc/audio_policy.conf \
