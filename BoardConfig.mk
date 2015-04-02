@@ -39,6 +39,7 @@ BOARD_KERNEL_BASE := 0x80000000
 
 # Define kernel config for inline building
 TARGET_KERNEL_SOURCE := kernel/samsung/tuna
+KERNEL_TOOLCHAIN := $(ARM_EABI_TOOLCHAIN)/../../arm-eabi-4.7/bin
 TARGET_KERNEL_CONFIG := dreams_tuna_defconfig
 
 TARGET_PREBUILT_KERNEL := device/samsung/tuna/kernel
