@@ -1,4 +1,8 @@
-#zygote
+# zygote
+type zygote, domain;
+type zygote_exec, exec_type, file_type;
+
+init_daemon_domain(zygote)
 
 allow zygote sysfs_devices_system_cpu:dir r_dir_perms;
 allow zygote init:unix_stream_socket { read write getattr listen getopt setopt accept };
