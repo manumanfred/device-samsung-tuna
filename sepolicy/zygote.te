@@ -1,6 +1,4 @@
 # zygote
-type zygote, domain;
-type zygote_exec, exec_type, file_type;
 
 init_daemon_domain(zygote)
 
