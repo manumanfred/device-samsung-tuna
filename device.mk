@@ -50,6 +50,9 @@ PRODUCT_PACKAGES += \
 	audio.r_submix.default
 
 PRODUCT_COPY_FILES += \
+	device/samsung/tuna/wpa_supplicant_overlay.conf:system/etc/wifi/wpa_supplicant_overlay.conf
+
+PRODUCT_COPY_FILES += \
 	device/samsung/tuna/audio/audio_policy.conf:system/etc/audio_policy.conf \
 	device/samsung/tuna/audio_effects.conf:system/vendor/etc/audio_effects.conf
 
