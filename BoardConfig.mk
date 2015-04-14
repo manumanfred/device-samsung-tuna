@@ -14,16 +14,13 @@
 # limitations under the License.
 #
 
-# This variable is set first, so it can be overridden
-# by BoardConfigVendor.mk
-USE_CAMERA_STUB := true
+# inherit from omap4 
+-include hardware/ti/omap4/BoardConfigCommon.mk
+
+PRODUCT_VENDOR_KERNEL_HEADERS += device/samsung/tuna/kernel-headers
 
 # Use the non-open-source parts, if they're present
 -include vendor/samsung/tuna/BoardConfigVendor.mk
-
-# Default values, if not overridden else where.
-TARGET_BOARD_INFO_FILE ?= device/samsung/tuna/board-info.txt
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR ?= device/samsung/tuna/bluetooth
 
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
@@ -32,7 +29,8 @@ TARGET_ARCH := arm
 TARGET_ARCH_VARIANT := armv7-a-neon
 TARGET_CPU_VARIANT := cortex-a9
 
-TARGET_NO_BOOTLOADER := true
+# Processor
+TARGET_BOARD_OMAP_CPU := 4460
 
 BOARD_KERNEL_BASE := 0x80000000
 # BOARD_KERNEL_CMDLINE :=
@@ -46,26 +44,28 @@ TARGET_PREBUILT_KERNEL := device/samsung/tuna/kernel
 
 TARGET_NO_RADIOIMAGE := true
 TARGET_BOARD_PLATFORM := omap4
+TARGET_BOARD_INFO_FILE := device/samsung/tuna/board-info.txt
 TARGET_BOOTLOADER_BOARD_NAME := tuna
 
-BOARD_EGL_CFG := device/samsung/tuna/egl.cfg
+TI_CAMERAHAL_USES_LEGACY_DOMX_DCC := true
+DOMX_TUNA := true
+COMMON_GLOBAL_CFLAGS += -DDOMX_TUNA
+TI_CAMERAHAL_MAX_CAMERAS_SUPPORTED := 2
+TI_CAMERAHAL_DEBUG_ENABLED := true
+
 BOARD_EGL_WORKAROUND_BUG_10194508 := true
 BOARD_CREATE_TUNA_HDCP_KEYS_SYMLINK := true
-
-#BOARD_USES_HGL := true
-#BOARD_USES_OVERLAY := true
-USE_OPENGL_RENDERER := true
 
 # Force the screenshot path to CPU consumer
 COMMON_GLOBAL_CFLAGS += -DFORCE_SCREENSHOT_CPU_PATH
 
 # set if the target supports FBIO_WAITFORVSYNC
 TARGET_HAS_WAITFORVSYNC := true
-
 TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
 
 # MD5_Init symbols. Needed only for Nexus's RIL?
 TARGET_WITH_BIONIC_MD5 := true
+
 # At least one file may need this
 COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS
 
@@ -76,8 +76,14 @@ BETTER_AUDIO_WITH_SAMPLE_RATE_48K := true
 TARGET_RECOVERY_UPDATER_LIBS += librecovery_updater_tuna
 TARGET_RELEASETOOLS_EXTENSIONS := device/samsung/tuna
 
-TARGET_RECOVERY_FSTAB := device/samsung/tuna/fstab.tuna
+TARGET_RECOVERY_FSTAB = device/samsung/tuna/fstab.tuna
+
 MALLOC_IMPL := dlmalloc
+
+TARGET_NO_BOOTLOADER := true
+TARGET_NO_RADIOIMAGE := true
+
+# Filesystem
 TARGET_USERIMAGES_USE_EXT4 := true
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 685768704
 # Disable journaling on system.img to save space.
@@ -89,19 +95,22 @@ BOARD_FLASH_BLOCK_SIZE := 4096
 #TARGET_USERIMAGES_SPARSE_EXT_DISABLED := true
 
 # Wifi related defines
-BOARD_WPA_SUPPLICANT_DRIVER := NL80211
-WPA_SUPPLICANT_VERSION      := VER_0_8_X
+BOARD_WLAN_DEVICE                := bcmdhd
+BOARD_WLAN_DEVICE_REV            := bcm4330_b2
+WPA_SUPPLICANT_VERSION           := VER_0_8_X
+BOARD_WPA_SUPPLICANT_DRIVER      := NL80211
 BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_bcmdhd
-BOARD_HOSTAPD_DRIVER        := NL80211
-BOARD_HOSTAPD_PRIVATE_LIB   := lib_driver_cmd_bcmdhd
-BOARD_WLAN_DEVICE           := bcmdhd
-WIFI_DRIVER_FW_PATH_PARAM   := "/sys/module/bcmdhd/parameters/firmware_path"
-#WIFI_DRIVER_MODULE_PATH     := "/system/lib/modules/bcmdhd.ko"
-WIFI_DRIVER_FW_PATH_STA     := "/vendor/firmware/fw_bcmdhd.bin"
-WIFI_DRIVER_FW_PATH_AP      := "/vendor/firmware/fw_bcmdhd_apsta.bin"
+BOARD_HOSTAPD_DRIVER             := NL80211
+BOARD_HOSTAPD_PRIVATE_LIB        := lib_driver_cmd_bcmdhd
+WIFI_DRIVER_FW_PATH_PARAM        := "/sys/module/bcmdhd/parameters/firmware_path"
+#WIFI_DRIVER_MODULE_PATH         := "/system/lib/modules/bcmdhd.ko"
+WIFI_DRIVER_FW_PATH_STA          := "/vendor/firmware/fw_bcmdhd.bin"
+WIFI_DRIVER_FW_PATH_AP           := "/vendor/firmware/fw_bcmdhd_apsta.bin"
+WIFI_BAND                        := 802_11_ABG
 
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/samsung/tuna/bluetooth
 
 BOARD_HAL_STATIC_LIBRARIES := libdumpstate.tuna
 
@@ -128,6 +137,7 @@ BOARD_SEPOLICY_UNION += \
         mediaserver.te \
         netd.te \
         pvrsrvctl.te \
+        pvrsrvinit.te \
         recovery.te \
         rild.te \
         sdcardd.te \

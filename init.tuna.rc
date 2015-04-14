@@ -81,6 +81,9 @@ on fs
 	chmod 0660 /dev/i2c-2
 	chown media media /dev/i2c-2
 
+# start pvr
+	start pvrsrvinit
+
 # change permissions for Tiler driver
     chmod 0777 /dev/tiler
     chmod 0777 /dev/dmm
@@ -147,11 +150,12 @@ service dumpdcc /system/bin/dumpdcc
 	seclabel u:r:dumpdcc:s0
 	oneshot
 
-service pvrsrvctl /vendor/bin/pvrsrvctl --start --no-module
+service pvrsrvinit /system/bin/pvrsrvinit
 	class core
 	user root
 	group root
 	oneshot
+	disabled
 
 # create filesystems if necessary
 service setup_fs /system/bin/setup_fs \

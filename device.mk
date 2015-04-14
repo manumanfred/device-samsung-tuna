@@ -19,6 +19,8 @@
 #
 # Everything in this directory will become public
 
+$(call inherit-product-if-exists, hardware/ti/omap4/omap4.mk)
+
 DEVICE_PACKAGE_OVERLAYS := device/samsung/tuna/overlay
 
 # This device is xhdpi.  However the platform doesn't
@@ -28,19 +30,17 @@ DEVICE_PACKAGE_OVERLAYS := device/samsung/tuna/overlay
 PRODUCT_AAPT_CONFIG := normal hdpi xhdpi
 PRODUCT_AAPT_PREF_CONFIG := xhdpi
 
-PRODUCT_PACKAGES := \
+PRODUCT_PACKAGES += \
+	hwcomposer.tuna \
+	camera.omap4 \
 	lights.tuna \
+	nfc.tuna \
+	power.tuna \
 	charger_res_images
 
 PRODUCT_PACKAGES += \
 	sensors.tuna \
 	libinvensense_mpl
-
-PRODUCT_PACKAGES += \
-	nfc.tuna
-
-PRODUCT_PACKAGES += \
-	power.tuna
 
 # Audio
 PRODUCT_PACKAGES += \
@@ -48,6 +48,10 @@ PRODUCT_PACKAGES += \
 	audio.a2dp.default \
 	audio.usb.default \
 	audio.r_submix.default
+
+# Symlinks
+PRODUCT_PACKAGES += \
+	libion.so
 
 PRODUCT_COPY_FILES += \
 	device/samsung/tuna/wpa_supplicant_overlay.conf:system/etc/wifi/wpa_supplicant_overlay.conf
@@ -186,17 +190,14 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	ro.com.google.clientidbase=android-google \
 	ro.com.android.wifi-watchlist=GoogleGuest \
 	ro.setupwizard.enterprise_mode=1 \
-	ro.com.android.dateformat=MM-dd-yyyy \
+	ro.com.android.dateformat=MM-dd-yyyy
+
+PRODUCT_PROPERTY_OVERRIDES += \
+	ro.opengles.version=131072 \
+	ro.sf.lcd_density=320 \
+	ro.hwui.disable_scissor_opt=true \
+	ro.bq.gpu_to_cpu_unsupported=1 \
 	camera2.portability.force_api=1
-
-PRODUCT_PROPERTY_OVERRIDES += \
-	ro.opengles.version=131072
-
-PRODUCT_PROPERTY_OVERRIDES += \
-	ro.sf.lcd_density=320
-
-PRODUCT_PROPERTY_OVERRIDES += \
-	ro.hwui.disable_scissor_opt=true
 
 PRODUCT_CHARACTERISTICS := nosdcard
 
@@ -226,10 +227,5 @@ PRODUCT_PACKAGES += \
 $(call inherit-product, frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk)
 
 $(call inherit-product-if-exists, vendor/nxp/pn544/nxp-pn544-fw-vendor.mk)
-$(call inherit-product, hardware/ti/omap4xxx/omap4.mk)
-$(call inherit-product-if-exists, vendor/ti/proprietary/omap4/ti-omap4-vendor.mk)
-$(call inherit-product-if-exists, vendor/samsung/tuna/device-vendor.mk)
-
-BOARD_WLAN_DEVICE_REV := bcm4330_b2
-WIFI_BAND             := 802_11_ABG
 $(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4330/device-bcm.mk)
+$(call inherit-product-if-exists, vendor/samsung/tuna/device-vendor.mk)
