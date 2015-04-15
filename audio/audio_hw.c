@@ -654,6 +654,7 @@ struct tuna_audio_device {
     audio_mode_t mode;
     int out_device;
     int in_device;
+    int cur_devices;
     struct pcm *pcm_modem_dl;
     struct pcm *pcm_modem_ul;
     int in_call;
@@ -1250,9 +1251,23 @@ static void select_output_device(struct tuna_audio_device *adev)
     mixer_ctl_set_value(adev->mixer_ctls.dl1_bt, 0, bt_on);
     mixer_ctl_set_value(adev->mixer_ctls.dl2_mono, 0,
                         (adev->mode != AUDIO_MODE_IN_CALL) && speaker_on);
-    mixer_ctl_set_value(adev->mixer_ctls.earpiece_enable, 0, earpiece_on);
 
     /* select output stage */
+        /* Automatic change of HSDAC power mode needed for earpiece
+       (which requires High-Perfomance mode) is not allowed
+       when DACs are active, disable DL1 outputs first */
+    if (((adev->cur_devices & AUDIO_DEVICE_OUT_WIRED_HEADSET) ||
+            (adev->cur_devices & AUDIO_DEVICE_OUT_WIRED_HEADPHONE))
+            && earpiece_on) {
+        set_route_by_array(adev->mixer, hs_output, 0);
+    }
+
+    if ((adev->cur_devices & AUDIO_DEVICE_OUT_EARPIECE)
+            && (headset_on || headphone_on)) {
+        mixer_ctl_set_value(adev->mixer_ctls.earpiece_enable, 0, 0);
+    }
+
+    mixer_ctl_set_value(adev->mixer_ctls.earpiece_enable, 0, earpiece_on);
     set_route_by_array(adev->mixer, hs_output, headset_on | headphone_on);
     set_route_by_array(adev->mixer, hf_output, speaker_on);
 
@@ -1318,6 +1333,8 @@ static void select_output_device(struct tuna_audio_device *adev)
     }
 
     mixer_ctl_set_value(adev->mixer_ctls.sidetone_capture, 0, sidetone_capture_on);
+
+    adev->cur_devices = adev->devices;
 }
 
 static void select_input_device(struct tuna_audio_device *adev)
@@ -1384,6 +1401,8 @@ static void select_input_device(struct tuna_audio_device *adev)
     }
 
     set_input_volumes(adev, main_mic_on, headset_on, sub_mic_on);
+
+    adev->cur_devices = adev->devices;
 }
 
 /* must be called with hw device and output stream mutexes locked */
