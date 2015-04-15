@@ -76,6 +76,8 @@
 #define MIXER_HF_LEFT_PLAYBACK              "Handsfree Left Playback"
 #define MIXER_HF_RIGHT_PLAYBACK             "Handsfree Right Playback"
 #define MIXER_EARPHONE_ENABLE_SWITCH        "Earphone Playback Switch"
+#define MIXER_HS_POWER_MODE                 "Headset Power Mode"
+#define MIXER_HS_LOW_POWER_MODE             "Low-Power"
 
 #define MIXER_ANALOG_LEFT_CAPTURE_ROUTE     "Analog Left Capture Route"
 #define MIXER_ANALOG_RIGHT_CAPTURE_ROUTE    "Analog Right Capture Route"
@@ -433,6 +435,11 @@ struct route_setting defaults[] = {
         .ctl_name = MIXER_DL1_PDM_SWITCH,
         .intval = 1,
     },
+    {
+         .ctl_name = MIXER_HS_POWER_MODE,
+         .strval = MIXER_HS_LOW_POWER_MODE,
+    },
+ 
 
     /* bt */
     {
