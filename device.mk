@@ -54,9 +54,6 @@ PRODUCT_PACKAGES += \
 	libion.so
 
 PRODUCT_COPY_FILES += \
-	device/samsung/tuna/wpa_supplicant_overlay.conf:system/etc/wifi/wpa_supplicant_overlay.conf
-
-PRODUCT_COPY_FILES += \
 	device/samsung/tuna/audio/audio_policy.conf:system/etc/audio_policy.conf \
 	device/samsung/tuna/audio_effects.conf:system/vendor/etc/audio_effects.conf
 
@@ -211,6 +208,13 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
 	e2fsck \
 	setup_fs
+
+# F2FS filesystem
+PRODUCT_PACKAGES += \
+        mkfs.f2fs \
+        fsck.f2fs \
+        fibmap.f2fs \
+        f2fstat
 
 # Don't preload EGL drivers in Zygote at boot time
 PRODUCT_PROPERTY_OVERRIDES += \
