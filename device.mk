@@ -38,6 +38,7 @@ PRODUCT_PACKAGES += \
 	power.tuna \
 	charger_res_images
 
+# Sensors
 PRODUCT_PACKAGES += \
 	sensors.tuna \
 	libinvensense_mpl
@@ -53,6 +54,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
 	libion.so
 
+# Audio policy configuration
 PRODUCT_COPY_FILES += \
 	device/samsung/tuna/audio/audio_policy.conf:system/etc/audio_policy.conf \
 	device/samsung/tuna/audio_effects.conf:system/vendor/etc/audio_effects.conf
@@ -72,6 +74,7 @@ PRODUCT_COPY_FILES += \
 	device/samsung/tuna/media_codecs.xml:system/etc/media_codecs.xml \
 	device/samsung/tuna/gps.conf:system/etc/gps.conf
 
+# Google media codecs
 PRODUCT_COPY_FILES += \
 	frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
 	frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telephony.xml \
@@ -180,6 +183,7 @@ endif
 PRODUCT_COPY_FILES += \
     $(NFCEE_ACCESS_PATH):system/etc/nfcee_access.xml
 
+# Google Apps...
 PRODUCT_PROPERTY_OVERRIDES += \
 	keyguard.no_require_sim=true \
 	ro.url.legal=http://www.google.com/intl/%s/mobile/android/basic/phone-legal.html \
@@ -189,15 +193,19 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	ro.setupwizard.enterprise_mode=1 \
 	ro.com.android.dateformat=MM-dd-yyyy
 
+# OpenGL ES version and LCD density
 PRODUCT_PROPERTY_OVERRIDES += \
 	ro.opengles.version=131072 \
-	ro.sf.lcd_density=320 \
+	ro.sf.lcd_density=320
+
+PRODUCT_PROPERTY_OVERRIDES += \
 	ro.hwui.disable_scissor_opt=true \
 	ro.bq.gpu_to_cpu_unsupported=1 \
 	camera2.portability.force_api=1
 
 PRODUCT_CHARACTERISTICS := nosdcard
 
+# we have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
 
 PRODUCT_PACKAGES += \
