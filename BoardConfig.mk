@@ -56,6 +56,10 @@ TI_CAMERAHAL_DEBUG_ENABLED := true
 BOARD_EGL_WORKAROUND_BUG_10194508 := true
 BOARD_CREATE_TUNA_HDCP_KEYS_SYMLINK := true
 
+# We don't support cursor layers, which when attempting to use them,
+# results in no cursors (mouse or otherwise) displayed on the screen.
+TARGET_DISABLE_CURSOR_LAYER := true
+
 # Force the screenshot path to CPU consumer
 COMMON_GLOBAL_CFLAGS += -DFORCE_SCREENSHOT_CPU_PATH
 
