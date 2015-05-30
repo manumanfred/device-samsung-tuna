@@ -71,11 +71,11 @@
 #define MIXER_DL1_BT_VX_SWITCH              "DL1 BT_VX Switch"
 #define MIXER_VOICE_CAPTURE_MIXER_CAPTURE   "Voice Capture Mixer Capture"
 
-#define MIXER_HS_LEFT_PLAYBACK              "Headset Left Playback"
-#define MIXER_HS_RIGHT_PLAYBACK             "Headset Right Playback"
-#define MIXER_HF_LEFT_PLAYBACK              "Handsfree Left Playback"
-#define MIXER_HF_RIGHT_PLAYBACK             "Handsfree Right Playback"
-#define MIXER_EARPHONE_ENABLE_SWITCH        "Earphone Playback Switch"
+#define MIXER_HS_LEFT_PLAYBACK              "HS Left Playback"
+#define MIXER_HS_RIGHT_PLAYBACK             "HS Right Playback"
+#define MIXER_HF_LEFT_PLAYBACK              "HF Left Playback"
+#define MIXER_HF_RIGHT_PLAYBACK             "HF Right Playback"
+#define MIXER_EARPHONE_ENABLE_SWITCH        "Earphone Enable Switch"
 
 #define MIXER_ANALOG_LEFT_CAPTURE_ROUTE     "Analog Left Capture Route"
 #define MIXER_ANALOG_RIGHT_CAPTURE_ROUTE    "Analog Right Capture Route"
@@ -216,7 +216,7 @@
 /* minimum sleep time in out_write() when write threshold is not reached */
 #define MIN_WRITE_SLEEP_US 5000
 
-#define DEFAULT_OUT_SAMPLING_RATE 48000 // TODO: Check with HDMI.
+#define DEFAULT_OUT_SAMPLING_RATE 44100 // 48000 is possible but interacts poorly with HDMI
 
 /* sampling rate when using MM low power port */
 #define MM_LOW_POWER_SAMPLING_RATE 44100
@@ -1438,7 +1438,7 @@ static int start_output_stream_low_latency(struct tuna_stream_out *out)
     if (success) {
         out->buffer_frames = pcm_config_tones.period_size * 2;
         if (out->buffer == NULL)
-            out->buffer = malloc(out->buffer_frames * audio_stream_out_frame_size(&out->stream));
+            out->buffer = malloc(out->buffer_frames * audio_stream_frame_size(&out->stream.common));
 
         if (adev->echo_reference != NULL)
             out->echo_reference = adev->echo_reference;
@@ -1474,7 +1474,7 @@ static int start_output_stream_deep_buffer(struct tuna_stream_out *out)
     }
     out->buffer_frames = DEEP_BUFFER_SHORT_PERIOD_SIZE * 2;
     if (out->buffer == NULL)
-        out->buffer = malloc(out->buffer_frames * audio_stream_out_frame_size(&out->stream));
+        out->buffer = malloc(out->buffer_frames * audio_stream_frame_size(&out->stream.common));
 
     return 0;
 }
@@ -1669,7 +1669,7 @@ static size_t out_get_buffer_size_low_latency(const struct audio_stream *stream)
     from pcm_config_tones.rate. */
     size_t size = (SHORT_PERIOD_SIZE * DEFAULT_OUT_SAMPLING_RATE) / pcm_config_tones.rate;
     size = ((size + 15) / 16) * 16;
-    return size * audio_stream_out_frame_size((const struct audio_stream_out *)stream);
+    return size * audio_stream_frame_size((struct audio_stream *)stream);
 }
 
 static size_t out_get_buffer_size_deep_buffer(const struct audio_stream *stream)
@@ -1683,12 +1683,12 @@ static size_t out_get_buffer_size_deep_buffer(const struct audio_stream *stream)
     size_t size = (DEEP_BUFFER_SHORT_PERIOD_SIZE * DEFAULT_OUT_SAMPLING_RATE) /
                         pcm_config_mm.rate;
     size = ((size + 15) / 16) * 16;
-    return size * audio_stream_out_frame_size((const struct audio_stream_out *)stream);
+    return size * audio_stream_frame_size((struct audio_stream *)stream);
 }
 
 static size_t out_get_buffer_size_hdmi(const struct audio_stream *stream)
 {
-    return HDMI_MULTI_PERIOD_SIZE * audio_stream_out_frame_size((const struct audio_stream_out *)stream);
+    return HDMI_MULTI_PERIOD_SIZE * audio_stream_frame_size((struct audio_stream *)stream);
 }
 
 static audio_channel_mask_t out_get_channels(const struct audio_stream *stream)
@@ -1935,7 +1935,7 @@ static ssize_t out_write_low_latency(struct audio_stream_out *stream, const void
     int ret;
     struct tuna_stream_out *out = (struct tuna_stream_out *)stream;
     struct tuna_audio_device *adev = out->dev;
-    size_t frame_size = audio_stream_out_frame_size(stream);
+    size_t frame_size = audio_stream_frame_size(&out->stream.common);
     size_t in_frames = bytes / frame_size;
     size_t out_frames = in_frames;
     bool force_input_standby = false;
@@ -2003,7 +2003,7 @@ exit:
     pthread_mutex_unlock(&out->lock);
 
     if (ret != 0) {
-        usleep(bytes * 1000000 / audio_stream_out_frame_size(stream) /
+        usleep(bytes * 1000000 / audio_stream_frame_size(&stream->common) /
                out_get_sample_rate(&stream->common));
     }
 
@@ -2027,7 +2027,7 @@ static ssize_t out_write_deep_buffer(struct audio_stream_out *stream, const void
     int ret;
     struct tuna_stream_out *out = (struct tuna_stream_out *)stream;
     struct tuna_audio_device *adev = out->dev;
-    size_t frame_size = audio_stream_out_frame_size(&out->stream);
+    size_t frame_size = audio_stream_frame_size(&out->stream.common);
     size_t in_frames = bytes / frame_size;
     size_t out_frames;
     bool use_long_periods;
@@ -2106,7 +2106,7 @@ exit:
     pthread_mutex_unlock(&out->lock);
 
     if (ret != 0) {
-        usleep(bytes * 1000000 / audio_stream_out_frame_size(stream) /
+        usleep(bytes * 1000000 / audio_stream_frame_size(&stream->common) /
                out_get_sample_rate(&stream->common));
     }
 
@@ -2119,7 +2119,7 @@ static ssize_t out_write_hdmi(struct audio_stream_out *stream, const void* buffe
     int ret;
     struct tuna_stream_out *out = (struct tuna_stream_out *)stream;
     struct tuna_audio_device *adev = out->dev;
-    size_t frame_size = audio_stream_out_frame_size(&out->stream);
+    size_t frame_size = audio_stream_frame_size(&out->stream.common);
     size_t in_frames = bytes / frame_size;
 
     /* acquiring hw device mutex systematically is useful if a low priority thread is waiting
@@ -2149,7 +2149,7 @@ exit:
     pthread_mutex_unlock(&out->lock);
 
     if (ret != 0) {
-        usleep(bytes * 1000000 / audio_stream_out_frame_size(stream) /
+        usleep(bytes * 1000000 / audio_stream_frame_size(&stream->common) /
                out_get_sample_rate_hdmi(&stream->common));
     }
     /* FIXME: workaround for HDMI multi channel channel swap on first playback after opening
@@ -2761,12 +2761,13 @@ static ssize_t process_frames(struct tuna_stream_in *in, void* buffer, ssize_t f
 }
 
 static ssize_t in_read(struct audio_stream_in *stream, void* buffer,
+
                        size_t bytes)
 {
     int ret = 0;
     struct tuna_stream_in *in = (struct tuna_stream_in *)stream;
     struct tuna_audio_device *adev = in->dev;
-    size_t frames_rq = bytes / audio_stream_in_frame_size(stream);
+    size_t frames_rq = bytes / audio_stream_frame_size(&stream->common);
 
     /* acquiring hw device mutex systematically is useful if a low priority thread is waiting
      * on the input stream mutex - e.g. executing select_mode() while holding the hw device
@@ -2799,7 +2800,7 @@ static ssize_t in_read(struct audio_stream_in *stream, void* buffer,
 
 exit:
     if (ret < 0)
-        usleep(bytes * 1000000 / audio_stream_in_frame_size(stream) /
+        usleep(bytes * 1000000 / audio_stream_frame_size(&stream->common) /
                in_get_sample_rate(&stream->common));
 
     pthread_mutex_unlock(&in->lock);
@@ -3225,8 +3226,7 @@ static int adev_open_output_stream(struct audio_hw_device *dev,
                                    audio_devices_t devices,
                                    audio_output_flags_t flags,
                                    struct audio_config *config,
-                                   struct audio_stream_out **stream_out,
-                                   const char *address __unused)
+                                   struct audio_stream_out **stream_out)
 {
     struct tuna_audio_device *ladev = (struct tuna_audio_device *)dev;
     struct tuna_stream_out *out;
@@ -3493,10 +3493,7 @@ static int adev_open_input_stream(struct audio_hw_device *dev,
                                   audio_io_handle_t handle,
                                   audio_devices_t devices,
                                   struct audio_config *config,
-                                  struct audio_stream_in **stream_in,
-                                  audio_input_flags_t flags __unused,
-                                  const char *address __unused,
-                                  audio_source_t source __unused)
+                                  struct audio_stream_in **stream_in)
 {
     struct tuna_audio_device *ladev = (struct tuna_audio_device *)dev;
     struct tuna_stream_in *in;
