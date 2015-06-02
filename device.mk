@@ -38,6 +38,10 @@ PRODUCT_PACKAGES += \
 	power.tuna \
 	charger_res_images
 
+# RIL
+PRODUCT_PACKAGES += \
+	libsecril-client
+
 # Sensors
 PRODUCT_PACKAGES += \
 	sensors.tuna \
