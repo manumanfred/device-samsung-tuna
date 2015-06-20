@@ -53,6 +53,12 @@ COMMON_GLOBAL_CFLAGS += -DDOMX_TUNA
 TI_CAMERAHAL_MAX_CAMERAS_SUPPORTED := 2
 TI_CAMERAHAL_DEBUG_ENABLED := true
 
+# Force the screenshot path to CPU consumer
+COMMON_GLOBAL_CFLAGS += -DFORCE_SCREENSHOT_CPU_PATH
+
+# At least one file may need this
+COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS
+
 BOARD_EGL_WORKAROUND_BUG_10194508 := true
 BOARD_CREATE_TUNA_HDCP_KEYS_SYMLINK := true
 
@@ -60,18 +66,12 @@ BOARD_CREATE_TUNA_HDCP_KEYS_SYMLINK := true
 # results in no cursors (mouse or otherwise) displayed on the screen.
 TARGET_DISABLE_CURSOR_LAYER := true
 
-# Force the screenshot path to CPU consumer
-COMMON_GLOBAL_CFLAGS += -DFORCE_SCREENSHOT_CPU_PATH
-
 # set if the target supports FBIO_WAITFORVSYNC
 TARGET_HAS_WAITFORVSYNC := true
 TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
 
 # MD5_Init symbols. Needed only for Nexus's RIL?
 TARGET_WITH_BIONIC_MD5 := true
-
-# At least one file may need this
-COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS
 
 # Fix A2DP audio guality
 BETTER_AUDIO_WITH_SAMPLE_RATE_48K := true
