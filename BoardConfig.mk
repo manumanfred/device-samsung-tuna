@@ -53,14 +53,11 @@ COMMON_GLOBAL_CFLAGS += -DDOMX_TUNA
 TI_CAMERAHAL_MAX_CAMERAS_SUPPORTED := 2
 TI_CAMERAHAL_DEBUG_ENABLED := true
 
-# Force the screenshot path to CPU consumer
-COMMON_GLOBAL_CFLAGS += -DFORCE_SCREENSHOT_CPU_PATH
-
-# At least one file may need this
-COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS
-
 BOARD_EGL_WORKAROUND_BUG_10194508 := true
 BOARD_CREATE_TUNA_HDCP_KEYS_SYMLINK := true
+
+# Force the screenshot path to CPU consumer
+COMMON_GLOBAL_CFLAGS += -DFORCE_SCREENSHOT_CPU_PATH
 
 # We don't support cursor layers, which when attempting to use them,
 # results in no cursors (mouse or otherwise) displayed on the screen.
