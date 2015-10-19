@@ -1,0 +1,4 @@
+allow mediaserver system_server:unix_stream_socket { read write };
+allow mediaserver system_data_file:sock_file write;
+allow mediaserver tmpfs:lnk_file read;
+allow mediaserver device:dir read;

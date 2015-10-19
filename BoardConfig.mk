@@ -131,34 +131,16 @@ BOARD_SEPOLICY_DIRS += \
         device/samsung/tuna/sepolicy
 
 BOARD_SEPOLICY_UNION += \
-        genfs_contexts \
-        file_contexts \
-        bluetooth.te \
-        debuggerd.te \
-        device.te \
-        domain.te \
-        drmserver.te \
-        dumpdcc.te \
-        file.te \
-        healthd.te \
-        init.te \
-        init_shell.te \
-        keystore.te \
-        lmkd.te \
-        mediaserver.te \
-        netd.te \
-        pvrsrvctl.te \
-        pvrsrvinit.te \
-        recovery.te \
-        rild.te \
-        sdcardd.te \
-        servicemanager.te \
-        setup_fs.te \
-        surfaceflinger.te \
-        system.te \
-        system_server.te \
-        uncrypt.te \
-        untrusted_app.te \
-        vold.te \
-        wpa_supplicant.te \
-        zygote.te
+	genfs_contexts \
+	file_contexts \
+	dumpdcc.te \
+	init.te \
+	mediaserver.te \
+	pvrsrvinit.te \
+	rild.te \
+	bluetooth.te \
+	sdcardd.te \
+	servicemanager.te \
+	system_server.te \
+	zygote.te \
+	vold.te

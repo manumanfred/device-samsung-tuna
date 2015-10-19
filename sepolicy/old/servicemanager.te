@@ -1,2 +1,3 @@
 # servicemanager
+
 allow servicemanager zygote:file { read open };

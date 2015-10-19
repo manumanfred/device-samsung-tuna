@@ -1,0 +1,9 @@
+# vold needs to load keystore which loads libtf_crypto_sst.so which has text relocations
+allow vold self:process execmem;
+
+# setup_fs
+# Access userdata block device.
+allow vold userdata_block_device:blk_file rw_file_perms;
+auditallow vold userdata_block_device:blk_file rw_file_perms;
+
+allow vold efs_file:dir { getattr read open ioctl };
