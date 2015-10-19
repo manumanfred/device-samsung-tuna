@@ -92,8 +92,6 @@ static void tuna_power_init(struct power_module *module)
     sysfs_write(CPUFREQ_INTERACTIVE "target_loads", "70 920000:80 1200000:99");
     sysfs_write(CPUFREQ_INTERACTIVE "go_hispeed_load", "99");
     sysfs_write(CPUFREQ_INTERACTIVE "above_hispeed_delay", "80000");
-    sysfs_write(CPUFREQ_INTERACTIVE "boostpulse_duration", "300000");
-//    sysfs_write(CPUFREQ_INTERACTIVE "io_is_busy", "1");
 
     ALOGI("Initialized successfully");
     tuna->inited = 1;
@@ -158,7 +156,6 @@ static void tuna_power_hint(struct power_module *module, power_hint_t hint,
     struct tuna_power_module *tuna = (struct tuna_power_module *) module;
     char buf[80];
     int len;
-    int duration = 1;
 
     if (!tuna->inited) {
         return;
@@ -166,19 +163,14 @@ static void tuna_power_hint(struct power_module *module, power_hint_t hint,
 
     switch (hint) {
     case POWER_HINT_INTERACTION:
-    case POWER_HINT_CPU_BOOST:
-        if (data != NULL)
-            duration = (int) data;
-
         if (boostpulse_open(tuna) >= 0) {
-            snprintf(buf, sizeof(buf), "%d", duration);
-            len = write(tuna->boostpulse_fd, buf, strlen(buf));
+	    len = write(tuna->boostpulse_fd, "1", 1);
 
-            if (len < 0) {
-                strerror_r(errno, buf, sizeof(buf));
-                ALOGE("Error writing to %s: %s\n", BOOSTPULSE_PATH, buf);
-            }
-        }
+	    if (len < 0) {
+	        strerror_r(errno, buf, sizeof(buf));
+		ALOGE("Error writing to %s: %s\n", BOOSTPULSE_PATH, buf);
+	    }
+	}
         break;
 
     case POWER_HINT_VSYNC:
