@@ -35,6 +35,7 @@ PRODUCT_PACKAGES += \
 	camera.omap4 \
 	lights.tuna \
 	nfc.tuna \
+	libpn544_fw \
 	power.tuna \
 	charger_res_images
 
