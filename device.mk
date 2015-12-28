@@ -21,7 +21,7 @@
 
 $(call inherit-product-if-exists, hardware/ti/omap4/omap4.mk)
 
-DEVICE_PACKAGE_OVERLAYS := device/samsung/tuna/overlay
+DEVICE_PACKAGE_OVERLAYS += device/samsung/tuna/overlay
 
 # This device is xhdpi.  However the platform doesn't
 # currently contain all of the bitmaps at xhdpi density so
