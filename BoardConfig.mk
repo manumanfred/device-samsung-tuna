@@ -70,10 +70,6 @@ BOARD_CREATE_TUNA_HDCP_KEYS_SYMLINK := true
 # Force the screenshot path to CPU consumer
 COMMON_GLOBAL_CFLAGS += -DFORCE_SCREENSHOT_CPU_PATH
 
-# We don't support cursor layers, which when attempting to use them,
-# results in no cursors (mouse or otherwise) displayed on the screen.
-TARGET_DISABLE_CURSOR_LAYER := true
-
 # set if the target supports FBIO_WAITFORVSYNC
 TARGET_HAS_WAITFORVSYNC := true
 TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
